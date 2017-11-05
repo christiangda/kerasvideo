@@ -13,7 +13,7 @@ RUN apt-get update && \
 #add on conda python and make sure it is in the path
 RUN mkdir -p $CONDA_DIR && \
     echo export PATH=$CONDA_DIR/bin:'$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet --output-document=anaconda.sh https://repo.continuum.io/archive/Anaconda3-4.4.0-Linux-x86_64.sh && \
+    wget --quiet --output-document=anaconda.sh https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh && \
     /bin/bash /anaconda.sh -f -b -p $CONDA_DIR && \
     rm anaconda.sh
 
@@ -25,16 +25,16 @@ RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
     chown keras /src
 
 #conda installing python, then tensorflow and keras for deep learning
-RUN conda install -y python=3.6 && \
+RUN conda install -y python=3.6.3 && \
     pip install --upgrade pip && \
-    pip install tensorflow==1.2.1 && \
-    pip install keras==2.0.5 && \
+    pip install tensorflow==1.4.0 && \
+    pip install keras==2.0.9 && \
     conda clean -yt
 
 #all the code samples for the video series
 VOLUME ["/src"]
 
-#serve up a jupyter notebook 
+#serve up a jupyter notebook
 USER keras
 WORKDIR /src
 EXPOSE 8888
